@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\IpTableController;
+use App\Http\Controllers\AuditLogController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,10 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('ip-show/{id}', 'show');
         Route::get('ip-edit/{id}', 'edit');
         Route::put('ip-update/{id}', 'update');
+    });
+
+    Route::controller(AuditLogController::class)->group(function () {
+        Route::get('audit-log-list', 'index');
     });
 });
 
