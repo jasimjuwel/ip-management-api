@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 /**
  *
  * @param string $data
- * @return json
+ * @return JsonResponse
  */
 if (!function_exists('validationErrorResponse')) {
     function validationErrorResponse($message): JsonResponse
@@ -20,12 +20,13 @@ if (!function_exists('validationErrorResponse')) {
         ]);
     }
 }
+
 /**
  * @param string $date
- * @return date
+ * @return string
  */
 if (!function_exists('dateTimeConvertDBtoForm')) {
-    function dateTimeConvertDBtoForm($date)
+    function dateTimeConvertDBtoForm($date): string
     {
         if (!empty($date)) {
             return \Carbon\Carbon::parse($date)->format('d-m-Y H:i:s');

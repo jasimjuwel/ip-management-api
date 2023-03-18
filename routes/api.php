@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\IpTableController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,5 +22,13 @@ Route::post('/login', [LoginController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/profile', [LoginController::class, 'profile']);
     Route::post('/logout', [LoginController::class, 'logout']);
+
+    Route::controller(IpTableController::class)->group(function () {
+        Route::post('ip-store', 'store');
+        Route::get('ip-list', 'index');
+        Route::get('ip-show/{id}', 'show');
+        Route::get('ip-edit/{id}', 'edit');
+        Route::put('ip-update/{id}', 'update');
+    });
 });
 

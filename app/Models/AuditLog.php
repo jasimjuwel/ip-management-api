@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class AuditLog extends Model
@@ -18,9 +19,9 @@ class AuditLog extends Model
     /**
      * get log date time format.
      *
-     * @return date
+     * @return string
      */
-    public function getLogTimeAttribute()
+    public function getLogTimeAttribute():string
     {
         return dateTimeConvertDBtoForm($this->attributes['log_time']);
     }

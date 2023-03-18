@@ -54,7 +54,7 @@ class LoginController extends ApiBaseController
 
             return $this->responseSuccess($this->response);
         } catch (\Exception $e) {
-            Log::error('LoginController@login error response ' . $e->getMessage());
+            Log::error('LoginController@login error response ' . $e->getMessage(), $e->getTrace());
 
             return $this->responseInternalError(trans('api.ERROR'));
         }
@@ -78,7 +78,7 @@ class LoginController extends ApiBaseController
 
             return $this->responseSuccess($this->response);
         } catch (\Exception $e) {
-            Log::error('LoginController@profile error response ' . $e->getMessage());
+            Log::error('LoginController@profile error response ' . $e->getMessage(), $e->getTrace());
 
             return $this->responseInternalError(trans('api.ERROR'));
         }
@@ -102,7 +102,7 @@ class LoginController extends ApiBaseController
 
             return $this->responseSuccess($this->response);
         } catch (\Exception $e) {
-            Log::error('LoginController@logout error response ' . $e->getMessage());
+            Log::error('LoginController@logout error response ' . $e->getMessage(), $e->getTrace());
 
             return $this->responseInternalError(trans('api.ERROR'));
         }
