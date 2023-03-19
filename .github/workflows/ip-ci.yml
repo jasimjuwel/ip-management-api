@@ -1,0 +1,53 @@
+name: IP CI
+
+on:
+  pull_request:
+    branches: [ main, staging ]
+
+jobs:
+  laravel-tests:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Copy .env.example to .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      - name: Install composer dependencies
+        run: composer install
+      - name: Set required directory permissions
+        run: chmod -R 775 bootstrap/cache
+      - name: Generate encryption key
+        run: php artisan key:generate
+      - name: Clear Config
+        run: |
+          php artisan config:clear
+          php artisan cache:clear
+      - name: Create temporary sqlite database
+        run: |
+          mkdir -p database
+          touch database/database.sqlite
+      - name: Run laravel database migrations
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+        run: php artisan migrate --force
+      - name: Run unit tests via PHPUnit
+        env:
+          DB_CONNECTION: sqlite
+          DB_DATABASE: database/database.sqlite
+        run: ./vendor/bin/phpunit
+      - name: Run Sensiolabs security checks 🚨
+        run: |
+          test -d security-checker || git clone https://github.com/sensiolabs/security-checker.git
+          cd security-checker
+          composer install
+          php security-checker security:check ../composer.lock
+      - name: Format PHP code
+        run: |
+          composer require --dev friendsofphp/php-cs-fixer
+          php-cs-fixer fix --config=.php_cs.dist
+      - name: Check PHP coding standards
+        run: vendor/bin/phpcs --standard=phpcs.xml
+      - name: Analyse PHP Code
+          run: vendor/bin/phpstan analyse --memory-limit=1024M -n app
