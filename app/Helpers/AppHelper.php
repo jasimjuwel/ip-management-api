@@ -17,7 +17,7 @@ if (!function_exists('validationErrorResponse')) {
             'message' => trans('api.INPUT_INVALID'),
             'data' => null,
             'errors' => $message,
-        ]);
+        ], 422);
     }
 }
 
