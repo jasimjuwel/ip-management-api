@@ -50,7 +50,7 @@ class ApiBaseController extends Controller
     {
         return $this->response([
             'status' => false,
-            'code' => 422,
+            'code' => $this->getStatusCode(),
             'message' => $message,
             'data' => null,
             'errors' => $data,

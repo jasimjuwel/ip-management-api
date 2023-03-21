@@ -20,7 +20,7 @@ class IpTableController extends ApiBaseController
 
     public function __construct(
         private IpTableRepository $ipTableRepository,
-        Request $request
+        Request                   $request
     )
     {
         parent::__construct($request);
@@ -34,21 +34,27 @@ class IpTableController extends ApiBaseController
      */
     public function index(): JsonResponse
     {
-        $ipList = $this->ipTableRepository->getIpList();
+        try {
+            $ipList = $this->ipTableRepository->getIpList();
 
-        $this->response = [
-            'status' => true,
-            'message' => 'Ip List',
-            'data' => [
-                'items' => new IpsResource($ipList->items()),
-                'max_page' => $ipList->lastPage(),
-                'current_page' => $ipList->currentPage(),
-                'per_page' => $ipList->perPage(),
-                'total' => $ipList->total(),
-            ]
-        ];
+            $this->response = [
+                'status' => true,
+                'message' => 'Ip List',
+                'data' => [
+                    'items' => new IpsResource($ipList->items()),
+                    'max_page' => $ipList->lastPage(),
+                    'current_page' => $ipList->currentPage(),
+                    'per_page' => $ipList->perPage(),
+                    'total' => $ipList->total(),
+                ]
+            ];
 
-        return $this->responseSuccess($this->response);
+            return $this->responseSuccess($this->response);
+        } catch (\Exception $e) {
+            Log::error('IpTableController@index error response ' . $e->getMessage(), $e->getTrace());
+
+            return $this->responseInternalError(trans('api.ERROR'));
+        }
     }
 
     /**
@@ -112,7 +118,7 @@ class IpTableController extends ApiBaseController
     public function update(IpTableRequest $request, int $id): JsonResponse
     {
         try {
-            $ipData =  $this->ipTableRepository->updateIp($request->all(), $id);
+            $ipData = $this->ipTableRepository->updateIp($request->all(), $id);
             $ipData->save();
 
             $this->response = [

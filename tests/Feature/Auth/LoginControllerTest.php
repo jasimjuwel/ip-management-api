@@ -32,7 +32,7 @@ class LoginControllerTest extends TestCase
 
     public function testUserLoginSuccessfully()
     {
-        $user = ['email' => 'filomena.green@example.net', 'password' => '123456'];
+        $user = ['email' => 'test@example.com', 'password' => 'password'];
         $this->json('POST', 'api/login', $user)
             ->assertStatus(200)
             ->assertJsonStructure([
