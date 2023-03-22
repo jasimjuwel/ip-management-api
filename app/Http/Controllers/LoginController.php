@@ -43,14 +43,14 @@ class LoginController extends ApiBaseController
             $user = Auth::user();
             $token = $user->createToken('IpApp')->plainTextToken;
 
-            return response()->json([
+            $this->response = [
                 'status' => true,
                 'message' => trans('api.login'),
                 'data' => [
                     'token' => $token,
                     'name' => $user->name
                 ]
-            ]);
+            ];
 
             return $this->responseSuccess($this->response);
         } catch (\Exception $e) {
