@@ -22,7 +22,7 @@ IP Address Management Solution
 * View the site by
     * Either running `php artisan serve` (in a new terminal/command prompt)
 ## Instruction:
-* `API Docs`
+* [API DOCS](https://documenter.getpostman.com/view/3982007/2s93RL2wbG#intro)
 
 ## Credintials:
 - User : test@example.com
