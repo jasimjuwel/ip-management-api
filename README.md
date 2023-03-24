@@ -21,6 +21,10 @@ IP Address Management Solution
 * Run `php artisan db:seed`. User will be created
 * View the site by
     * Either running `php artisan serve` (in a new terminal/command prompt)
+
+* Run unit tests
+    * `./vendor/bin/phpunit` 
+
 ## Instruction:
 * [API DOCS](https://documenter.getpostman.com/view/3982007/2s93RL2wbG#intro)
 
