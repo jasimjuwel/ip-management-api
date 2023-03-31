@@ -14,7 +14,7 @@ trait AuditLogWrite
      */
     public function logActivity($data)
     {
-        if ($this->request) {
+        if (request()->method() == 'POST' || request()->method() == 'PUT') {
             $newApi = new AuditLog;
             $newApi->log_time = Carbon::now()->format('Y-m-d h:i:s');
             $newApi->request_path = request()->getUri();
